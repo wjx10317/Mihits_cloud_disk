@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth
+from app.routers import auth, file, folder, trash
 from app.middleware.error_handler import AppException, app_exception_handler
 
 app = FastAPI(
@@ -23,6 +23,9 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(file.router)
+app.include_router(folder.router)
+app.include_router(trash.router)
 
 
 @app.get("/api/health")
