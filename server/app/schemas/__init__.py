@@ -7,6 +7,7 @@ from app.schemas.file import (
     UploadInitRequest, UploadInitResponse, UploadCompleteRequest,
     ChunkStatusResponse, DownloadResponse,
 )
+from app.schemas.storage import StorageUsage, CategoryBreakdown, StorageQuotaUpdate
 
 __all__ = [
     "RegisterRequest", "LoginRequest", "UserInfo", "TokenResponse", "RefreshRequest", "RefreshResponse",
@@ -16,4 +17,5 @@ __all__ = [
     "TrashRestoreRequest", "TrashItemInfo", "SearchResult",
     "UploadInitRequest", "UploadInitResponse", "UploadCompleteRequest",
     "ChunkStatusResponse", "DownloadResponse",
+    "StorageUsage", "CategoryBreakdown", "StorageQuotaUpdate",
 ]

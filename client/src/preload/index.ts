@@ -1,20 +1,20 @@
-import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { contextBridge, ipcRenderer } from 'electron'
 
-const api = {
-  // 预留：后续添加 IPC 通信接口
-}
+// 暴露安全 API 到渲染进程
+contextBridge.exposeInMainWorld('electronAPI', {
+  // 文件系统操作
+  selectFolder: () => ipcRenderer.invoke('dialog:selectFolder'),
+  selectFile: () => ipcRenderer.invoke('dialog:selectFile'),
 
-if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
-  }
-} else {
-  // @ts-ignore
-  window.electron = electronAPI
-  // @ts-ignore
-  window.api = api
-}
+  // 系统信息
+  getAppVersion: () => ipcRenderer.invoke('app:getVersion'),
+  getPlatform: () => ipcRenderer.invoke('app:getPlatform'),
+
+  // 窗口控制
+  minimize: () => ipcRenderer.send('window:minimize'),
+  maximize: () => ipcRenderer.send('window:maximize'),
+  close: () => ipcRenderer.send('window:close'),
+
+  // 系统托盘
+  setTrayVisible: (visible: boolean) => ipcRenderer.send('tray:setVisible', visible),
+})

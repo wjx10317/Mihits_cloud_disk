@@ -1,8 +1,16 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
+export interface ElectronAPI {
+  selectFolder: () => Promise<string | null>
+  selectFile: () => Promise<string | null>
+  getAppVersion: () => Promise<string>
+  getPlatform: () => Promise<string>
+  minimize: () => void
+  maximize: () => void
+  close: () => void
+  setTrayVisible: (visible: boolean) => void
+}
 
 declare global {
   interface Window {
-    electron: ElectronAPI
-    api: unknown
+    electronAPI: ElectronAPI
   }
 }

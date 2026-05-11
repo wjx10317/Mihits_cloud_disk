@@ -18,15 +18,25 @@ const router = createRouter({
     },
     {
       path: '/',
-      name: 'Files',
-      component: () => import('@/views/FilesView.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/trash',
-      name: 'Trash',
-      component: () => import('@/views/TrashView.vue'),
-      meta: { requiresAuth: true }
+      component: () => import('@/layouts/MainLayout.vue'),
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          name: 'Files',
+          component: () => import('@/views/FilesView.vue')
+        },
+        {
+          path: 'trash',
+          name: 'Trash',
+          component: () => import('@/views/TrashView.vue')
+        },
+        {
+          path: 'settings',
+          name: 'Settings',
+          component: () => import('@/views/settings/SettingsView.vue')
+        }
+      ]
     }
   ]
 })
